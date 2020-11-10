@@ -31,7 +31,13 @@ class Calculator:
 
 
 class CaloriesCalculator(Calculator):
-    pass
+    def get_calories_remained(self):
+        calories_remained = self.get_balance_remained()
+        if calories_remained > 0:
+            message = f'Сегодня можно съесть что-нибудь ещё, но с общей калорийностью не более {calories_remained} кКал'
+        else:
+            message = 'Хватит есть!'
+        return message
 
 
 class CashCalculator(Calculator):
@@ -70,13 +76,3 @@ class Record:
             self.date = dt.date.today()
         else:
             self.date = dt.datetime.strptime(date, '%d.%m.%Y').date()
-
-
-cash_calculator = CashCalculator(1000)
-cash_calculator.add_record(Record(amount=999, comment="кофе"))
-cash_calculator.add_record(Record(amount=145, comment="кофе", date='3.11.2020'))
-
-print(cash_calculator.get_today_stats())
-print(cash_calculator.get_week_stats())
-print(cash_calculator.get_today_cash_remained('eur'))
-
